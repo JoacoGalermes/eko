@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Test de calibración Eko-Party</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root{
+    color-scheme:dark;
+    --bg:#070820; --card:#10133A; --card2:#161a4a; --line:rgba(255,255,255,.12);
+    --ink:#EEF1FF; --ink2:#C3C9EE; --mute:#9AA2D6;
+    --green:#03FF9E; --coral:#FF6A4D; --amber:#FFC53D; --blue:#4C86FF;
+    --disp:'Barlow Condensed','Bahnschrift','Arial Narrow',sans-serif;
+    --body:'Barlow','Segoe UI',system-ui,sans-serif;
+    --mono:'JetBrains Mono','Consolas',monospace;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--bg)}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;margin:0;padding-inline:16px;padding-block:0 48px}
+  .wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+  header{padding-block:28px 6px;display:flex;flex-direction:column;gap:8px}
+  .tag{font-family:var(--mono);font-size:13px;color:var(--green)}
+  h1{font-family:var(--disp);font-size:44px;line-height:1;margin:0;letter-spacing:-.3px;text-wrap:balance}
+  .lead{color:var(--ink2);margin:0}
+  .rules{display:grid;grid-template-columns:1fr;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .rules p{margin:0;font-size:15px;color:var(--ink2)}
+  .rules b{color:var(--ink)}
+  .rules .k{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--amber)}
+  form{display:flex;flex-direction:column;gap:10px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;transition:border-color .3s,background .3s}
+  .q .top{display:flex;gap:10px;align-items:flex-start}
+  .q .n{font-family:var(--mono);font-size:13px;color:var(--mute);padding-top:3px;min-width:22px}
+  .q .txt{font-weight:600;font-size:16px}
+  .q .src{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);font-weight:500;margin-top:2px}
+  .q.bonus{border-color:rgba(255,197,61,.45)}
+  .q.bonus .n{color:var(--amber)}
+  .rng{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end}
+  label{display:flex;flex-direction:column;gap:4px;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:1px}
+  input{font:500 18px var(--body);color:var(--ink);background:#0A0C2A;border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px 12px;width:100%;min-width:0;font-variant-numeric:tabular-nums}
+  input:focus{outline:2px solid var(--green);outline-offset:1px;border-color:transparent}
+  input:disabled{opacity:1;color:var(--ink2);background:transparent;border-style:dashed}
+  input.bad{border-color:var(--coral)}
+  .unit{grid-column:1/-1;font-family:var(--mono);font-size:11px;color:var(--mute)}
+  .res{display:none;border-top:1px solid var(--line);padding-top:10px;gap:10px;align-items:center}
+  .done .res{display:flex}
+  .badge{font-family:var(--disp);font-weight:700;font-size:20px;padding:4px 12px;border-radius:30px;white-space:nowrap}
+  .ok .badge{background:rgba(3,255,158,.15);color:var(--green)}
+  .ko .badge{background:rgba(255,106,77,.16);color:var(--coral)}
+  .q.ok{border-color:rgba(3,255,158,.5)} .q.ko{border-color:rgba(255,106,77,.5)}
+  .ans{font-size:14px;color:var(--ink2)}
+  .ans b{font-family:var(--disp);font-size:22px;color:var(--ink);font-weight:700}
+  .err{color:var(--coral);font-size:14px;min-height:1.2em;margin:0}
+  button{font:700 20px var(--disp);letter-spacing:.3px;background:var(--green);color:#070820;border:0;border-radius:12px;padding:14px 18px;cursor:pointer}
+  button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .confirm{display:none;background:var(--card2);border:1px solid var(--amber);border-radius:14px;padding:14px 16px;gap:10px;flex-direction:column}
+  .confirm.on{display:flex}
+  .confirm p{margin:0;color:var(--ink2);font-size:15px}
+  .confirm .row{display:flex;gap:8px;flex-wrap:wrap}
+  .confirm .sec{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .score{display:none;background:linear-gradient(160deg,#12185e,#0A0C2A);border:1px solid rgba(3,255,158,.4);border-radius:16px;padding:18px;flex-direction:column;gap:6px}
+  .done-page .score{display:flex}
+  .score .big{font-family:var(--disp);font-size:64px;font-weight:700;line-height:1;color:var(--green);font-variant-numeric:tabular-nums}
+  .score .big small{font-size:28px;color:var(--mute)}
+  .score .lvl{font-family:var(--disp);font-size:26px;font-weight:700}
+  .score p{margin:0;color:var(--ink2);font-size:15px}
+  .lock{font-family:var(--mono);font-size:12px;color:var(--mute)}
+  footer{font-family:var(--mono);font-size:11px;color:var(--mute);text-align:center;padding-top:10px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <span class="tag">&lt;/ calibración &gt; · Eko-Party · Safe-U</span>
+    <h1>¿Cuánto sabés de lo que no sabés?</h1>
+    <p class="lead">10 preguntas y 1 bonus. Para cada una, un rango: mínimo y máximo.</p>
+  </header>
+
+  <div class="rules" id="rules">
+    <span class="k">LA CONSIGNA</span>
+    <p>No pongas el número exacto. Poné un <b>mínimo y un máximo</b> en el que estés <b>90% seguro</b> de que cae la respuesta.</p>
+    <p>Bien calibrado = aciertan <b>9 de 10</b>. "Entre 0 e infinito" no vale. Sin Google, sin ChatGPT, sin el vecino.</p>
+    <p>Cuando envíes, tus rangos quedan <b>fijos</b> y ves cuáles acertaste. Las respuestas correctas las revelamos nosotros en pantalla.</p>
+  </div>
+
+  <div class="score" id="score">
+    <span class="lock">🔒 respuestas enviadas y fijadas · las correctas, en pantalla</span>
+    <div class="big" id="sc-num">0<small>/10</small></div>
+    <div class="lvl" id="sc-lvl"></div>
+    <p id="sc-txt"></p>
+  </div>
+
+  <form id="f" novalidate></form>
+
+  <footer>Safe-U · Joaquín Galermes &amp; Gonzalo Luis</footer>
+</div>
+
+<script>
+(function () {
+  var Q = [
+    { t: '¿En qué año se mandó el primer spam de la historia?', s: 'por ARPANET, antes de que existiera internet', u: 'año' },
+    { t: '¿Cuántos goles hizo Messi en Mundiales, sumando todos?', u: 'goles' },
+    { t: '¿Cuántos metros mide el Obelisco?', u: 'metros' },
+    { t: '¿Cuántas cuentas de Yahoo quedaron expuestas en la brecha de 2013?', u: 'millones de cuentas' },
+    { t: '¿En cuántos segundos hace clic la persona típica en un phishing, desde que lo abre?', s: 'mediana · Verizon DBIR 2024', u: 'segundos' },
+    { t: '¿En qué año nació Havanna en Mar del Plata?', u: 'año' },
+    { t: '¿Cuántos millones de USD pagó Colonial Pipeline de rescate en 2021?', u: 'millones de USD' },
+    { t: '¿Qué edad tenía Kevin Mitnick cuando lo arrestó el FBI?', u: 'años' },
+    { t: '¿En qué % de las brechas hubo un error humano no malicioso?', s: 'Verizon DBIR 2024', u: '%' },
+    { t: '¿En qué año se mandó el primer SMS?', u: 'año' },
+    { t: 'BONUS: ¿cuánto cuesta en promedio una brecha de datos en el mundo?', s: 'IBM Cost of a Data Breach 2026', u: 'millones de USD', bonus: true }
+  ];
+  // Las respuestas se revelan en pantalla durante la charla, no acá. Si llegaste hasta este código: bien ahí, hacker 😉
+  var K = JSON.parse(atob('Wzk4MTksIDE5NTksIDIxNzcuMCwgMTM5MDcsIDE5OTEsIDk2OTUsIDE5MjQuNiwgMjAzMSwgMjE3OSwgOTg3NSwgMTkyNi45Nl0=')).map(function (v) { return Math.round((v - 1907) / 4 * 100) / 100; });
+  var KEY = 'eko-calibracion-v2', f = document.getElementById('f'), saved = null;
+  try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+
+  function parse(v) {
+    v = String(v || '').trim().replace(/\s/g, '').replace(/[^0-9.,-]/g, '');
+    if (!v) return NaN;
+    if (v.indexOf(',') >= 0) v = v.replace(/\./g, '').replace(',', '.');
+    else if (/^\d{1,3}(\.\d{3})+$/.test(v)) v = v.replace(/\./g, '');
+    return parseFloat(v);
+  }
+  function fmt(n) { return String(n).replace('.', ','); }
+
+  Q.forEach(function (q, i) {
+    var d = document.createElement('div'); d.className = 'q' + (q.bonus ? ' bonus' : ''); d.id = 'q' + i;
+    d.innerHTML = '<div class="top"><span class="n">' + (q.bonus ? '★' : String(i + 1).padStart(2, '0')) + '</span><span class="txt"></span></div>' +
+      '<div class="rng"><label for="mn' + i + '">MÍNIMO<input id="mn' + i + '" inputmode="decimal" autocomplete="off"></label>' +
+      '<label for="mx' + i + '">MÁXIMO<input id="mx' + i + '" inputmode="decimal" autocomplete="off"></label><span class="unit"></span></div>' +
+      '<div class="res"><span class="badge"></span><span class="ans"></span></div>';
+    d.querySelector('.txt').textContent = q.t;
+    if (q.s) { var s = document.createElement('span'); s.className = 'src'; s.textContent = q.s; d.querySelector('.txt').appendChild(s); }
+    d.querySelector('.unit').textContent = 'en ' + q.u;
+    f.appendChild(d);
+  });
+  var err = document.createElement('p'); err.className = 'err'; err.id = 'err'; err.setAttribute('role', 'alert'); f.appendChild(err);
+  var btn = document.createElement('button'); btn.type = 'submit'; btn.id = 'send'; btn.textContent = 'Enviar mis rangos'; f.appendChild(btn);
+  var conf = document.createElement('div'); conf.className = 'confirm'; conf.id = 'conf';
+  conf.innerHTML = '<p>Después de enviar ya no se pueden cambiar. ¿Enviamos?</p><div class="row"><button type="button" id="yes">Sí, enviar y ver resultados</button><button type="button" class="sec" id="no">Seguir editando</button></div>';
+  f.appendChild(conf);
+
+  function collect() {
+    var out = [], bad = 0;
+    Q.forEach(function (q, i) {
+      var a = document.getElementById('mn' + i), b = document.getElementById('mx' + i), x = parse(a.value), y = parse(b.value);
+      var ok = !isNaN(x) && !isNaN(y) && x <= y;
+      a.classList.toggle('bad', !ok); b.classList.toggle('bad', !ok);
+      if (!ok) bad++;
+      out.push([a.value.trim(), b.value.trim(), x, y]);
+    });
+    return { rows: out, bad: bad };
+  }
+
+  function render(rows) {
+    var hits = 0, bonusHit = false;
+    Q.forEach(function (q, i) {
+      var r = rows[i], el = document.getElementById('q' + i), hit = r[2] <= K[i] && K[i] <= r[3];
+      document.getElementById('mn' + i).value = r[0]; document.getElementById('mx' + i).value = r[1];
+      document.getElementById('mn' + i).disabled = true; document.getElementById('mx' + i).disabled = true;
+      el.classList.add('done', hit ? 'ok' : 'ko');
+      el.querySelector('.badge').textContent = hit ? '✅ Adentro' : '❌ Afuera';
+      var ans = el.querySelector('.ans'); ans.textContent = '';
+      ans.appendChild(document.createTextNode('Tu rango: '));
+      var b = document.createElement('b'); b.textContent = r[0] + ' – ' + r[1]; ans.appendChild(b);
+      ans.appendChild(document.createTextNode(' ' + q.u));
+      if (q.bonus) bonusHit = hit; else if (hit) hits++;
+    });
+    document.body.classList.add('done-page');
+    document.getElementById('sc-num').innerHTML = hits + '<small>/10' + (bonusHit ? ' + bonus ★' : '') + '</small>';
+    var lvl = document.getElementById('sc-lvl'), txt = document.getElementById('sc-txt');
+    if (hits >= 9) { lvl.textContent = 'Bien calibrado'; lvl.style.color = 'var(--green)'; txt.textContent = 'Tus rangos dicen la verdad sobre tu incertidumbre. Con eso se puede estimar riesgo.'; }
+    else if (hits >= 6) { lvl.textContent = 'Casi'; lvl.style.color = 'var(--amber)'; txt.textContent = 'Lo típico la primera vez. La calibración se entrena: la próxima, abrí un poco más los rangos.'; }
+    else { lvl.textContent = 'Overconfidence'; lvl.style.color = 'var(--coral)'; txt.textContent = 'Rangos demasiado angostos. Es el sesgo número 1 en ciber, y el que rompe los presupuestos.'; }
+    btn.hidden = true; conf.classList.remove('on'); err.textContent = '';
+    document.getElementById('rules').hidden = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var c = collect();
+    if (c.bad) { err.textContent = 'Te faltan ' + c.bad + ' rango(s), o el mínimo es mayor que el máximo. Están marcados en rojo.'; conf.classList.remove('on'); return; }
+    err.textContent = ''; conf.classList.add('on'); document.getElementById('yes').focus();
+  });
+  document.getElementById('no').onclick = function () { conf.classList.remove('on'); };
+  document.getElementById('yes').onclick = function () {
+    var c = collect(); if (c.bad) return;
+    var rows = c.rows;
+    try { localStorage.setItem(KEY, JSON.stringify(rows)); } catch (e) {}
+    render(rows);
+  };
+  if (saved && saved.length === Q.length) render(saved);
+})();
+</script>
+
+</body>
+</html>

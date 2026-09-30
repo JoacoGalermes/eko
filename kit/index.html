@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Kit del lunes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root{
+    color-scheme:dark;
+    --bg:#070820; --card:#10133A; --line:rgba(255,255,255,.12);
+    --ink:#EEF1FF; --ink2:#C3C9EE; --mute:#9AA2D6;
+    --green:#03FF9E; --amber:#FFC53D; --coral:#FF6A4D;
+    --disp:'Barlow Condensed','Bahnschrift','Arial Narrow',sans-serif;
+    --body:'Barlow','Segoe UI',system-ui,sans-serif;
+    --mono:'JetBrains Mono','Consolas',monospace;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--bg)}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;margin:0;padding-inline:16px;padding-block:0 48px}
+  .wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  header{padding-block:28px 4px;display:flex;flex-direction:column;gap:8px}
+  .tag{font-family:var(--mono);font-size:13px;color:var(--green)}
+  h1{font-family:var(--disp);font-size:44px;line-height:1;margin:0;text-wrap:balance}
+  h1 span{color:var(--green)}
+  .lead{color:var(--ink2);margin:0}
+  h2{font-family:var(--disp);font-size:26px;margin:18px 0 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+  .k{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--green)}
+  .t{font-weight:600}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--ink2)}
+  input,textarea{font:500 17px var(--body);color:var(--ink);background:#0A0C2A;border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:9px 11px;min-width:0}
+  input{width:120px;font-variant-numeric:tabular-nums}
+  textarea{width:100%;min-height:70px;resize:vertical}
+  input:focus,textarea:focus{outline:2px solid var(--green);outline-offset:1px;border-color:transparent}
+  .tip{font-size:13px;color:var(--mute)}
+  ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;counter-reset:q}
+  ol li{counter-increment:q}
+  ol li label{font-weight:600;display:flex;gap:8px}
+  ol li label::before{content:counter(q,decimal-leading-zero);font-family:var(--mono);color:var(--amber);font-size:14px;padding-top:2px}
+  .cheat{background:linear-gradient(160deg,#12185e,#0A0C2A);border:1px solid rgba(3,255,158,.35);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px}
+  .cheat p{margin:0;font-size:15px;color:var(--ink2)}
+  .cheat b{color:var(--green)}
+  .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  button{font:700 19px var(--disp);background:var(--green);color:#070820;border:0;border-radius:12px;padding:12px 16px;cursor:pointer}
+  button.sec{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  #msg{font-size:14px;color:var(--green);min-height:1.2em;margin:0}
+  #out{width:100%;min-height:160px;font-family:var(--mono);font-size:13px}
+  footer{font-family:var(--mono);font-size:12px;color:var(--mute);text-align:center;padding-top:14px;line-height:1.7}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <span class="tag">&lt;/ kit del lunes &gt; · Eko-Party · Safe-U</span>
+    <h1>Tu awareness vale plata. <span>Ahora ponele el número.</span></h1>
+    <p class="lead">Completalo acá. Se guarda solo en este celular; al final lo copiás y te lo mandás.</p>
+  </header>
+
+  <h2>Mis 3 números</h2>
+  <div class="card"><span class="k">01 · MI ALE</span><span class="t">Pérdida anual esperada por riesgo humano</span>
+    <div class="row">USD <input id="ale" data-s="ale" inputmode="decimal" aria-label="Mi ALE en USD"> por año</div>
+    <span class="tip">¿No lo tenés medido? Arrancá con 0,1% a 0,15% de los ingresos anuales, y declaralo como benchmark.</span></div>
+  <div class="card"><span class="k">02 · MI PROGRAMA</span><span class="t">Inversión → menos pérdida por año</span>
+    <div class="row">USD <input id="inv" data-s="inv" inputmode="decimal" aria-label="Inversión en USD"> → USD <input id="dale" data-s="dale" inputmode="decimal" aria-label="Menos pérdida por año en USD"> /año</div>
+    <span class="tip">Solo los controles que rinden más de 1x, en orden de ROI.</span></div>
+  <div class="card"><span class="k">03 · MI ROI</span><span class="t">Retorno por dólar + meses para pagarse</span>
+    <div class="row"><input id="roi" data-s="roi" inputmode="decimal" aria-label="ROI"> x · se paga en <input id="pay" data-s="pay" inputmode="decimal" aria-label="Meses de payback"> meses</div>
+    <span class="tip">ROI = menos pérdida ÷ inversión. Payback = 12 × inversión ÷ menos pérdida.</span></div>
+
+  <h2>6 preguntas para el lunes</h2>
+  <ol>
+    <li class="card"><label for="q1">¿Qué 3 conductas explican la mayoría de nuestros incidentes?</label><textarea id="q1" data-s="q1"></textarea></li>
+    <li class="card"><label for="q2">¿Cuántos intentos de phishing o BEC llegan a una persona por año, después del filtro?</label><textarea id="q2" data-s="q2"></textarea></li>
+    <li class="card"><label for="q3">¿Cuánto nos costó el último incidente por error humano, con horas y clientes incluidos?</label><textarea id="q3" data-s="q3"></textarea></li>
+    <li class="card"><label for="q4">¿Qué decisión tomamos el último trimestre con la tasa de clic?</label><textarea id="q4" data-s="q4"></textarea></li>
+    <li class="card"><label for="q5">¿Cuánto dura el efecto de nuestra última campaña?</label><textarea id="q5" data-s="q5"></textarea></li>
+    <li class="card"><label for="q6">¿Qué control dejaríamos de hacer si su ROI da menos de 1x?</label><textarea id="q6" data-s="q6"></textarea></li>
+  </ol>
+
+  <h2>Machete de la charla</h2>
+  <div class="cheat">
+    <p><b>Frecuencia de pérdida</b> = intentos que llegan × P(la persona cae) × P(pasa las defensas)</p>
+    <p><b>ALE</b> = frecuencia × pérdida por evento. El promedio del año normal.</p>
+    <p><b>VaR 95</b> = el año malo: 1 de cada 20 perdés esto o más.</p>
+    <p><b>ROI</b> = pérdida evitada ÷ costo. Menos de 1x: no lo pidas.</p>
+    <p><b>Awareness vive en una pieza:</b> P(la persona cae). Si la bajás a la mitad, esa parte de la pérdida baja a la mitad.</p>
+  </div>
+
+  <h2>4 lecturas para seguir</h2>
+  <div class="card">
+    <p class="tip" style="color:var(--ink2);margin:0"><b style="color:var(--ink)">How to Measure Anything in Cybersecurity Risk</b> · Hubbard &amp; Seiersen. Calibración y cuantificación.</p>
+    <p class="tip" style="color:var(--ink2);margin:0"><b style="color:var(--ink)">Measuring and Managing Information Risk (FAIR)</b> · Freund &amp; Jones. El modelo de pérdida.</p>
+    <p class="tip" style="color:var(--ink2);margin:0"><b style="color:var(--ink)">Influence</b> · Robert Cialdini. Cómo nos persuaden (y nos engañan).</p>
+    <p class="tip" style="color:var(--ink2);margin:0"><b style="color:var(--ink)">Leading Change</b> · John Kotter. Por qué el cambio se cae antes de anclarse.</p>
+  </div>
+
+  <div class="btns">
+    <button type="button" id="copy">Copiar mis respuestas</button>
+    <button type="button" class="sec" id="clear">Borrar todo</button>
+  </div>
+  <p id="msg" role="status"></p>
+  <textarea id="out" hidden readonly aria-label="Tus respuestas en texto"></textarea>
+
+  <footer>Safe-U<br>joaquin.galermes@safe-u.com · gonzalo.luis@safe-u.com</footer>
+</div>
+
+<script>
+(function () {
+  var KEY = 'eko-kit-v1', st = {};
+  try { st = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+  var fields = document.querySelectorAll('[data-s]');
+  fields.forEach(function (el) {
+    var k = el.getAttribute('data-s'); if (st[k]) el.value = st[k];
+    el.addEventListener('input', function () { st[k] = el.value; try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} });
+  });
+  function texto() {
+    var t = 'KIT DEL LUNES · Eko-Party\n\nMi ALE: USD ' + (st.ale || '___') + '/año\nMi programa: USD ' + (st.inv || '___') + ' → USD ' + (st.dale || '___') + '/año\nMi ROI: ' + (st.roi || '___') + 'x · se paga en ' + (st.pay || '___') + ' meses\n';
+    document.querySelectorAll('ol label').forEach(function (l, i) { t += '\n' + (i + 1) + '. ' + l.textContent + '\n   ' + (st['q' + (i + 1)] || ''); });
+    return t;
+  }
+  var msg = document.getElementById('msg'), out = document.getElementById('out'), armed = false;
+  document.getElementById('copy').onclick = function () {
+    var t = texto();
+    function fallback() { out.hidden = false; out.value = t; out.focus(); out.select(); msg.textContent = 'Seleccioné el texto: copialo con el menú del celular.'; }
+    try { navigator.clipboard.writeText(t).then(function () { msg.textContent = 'Copiado. Pegalo en un mail o en tus notas.'; }, fallback); } catch (e) { fallback(); }
+  };
+  document.getElementById('clear').onclick = function () {
+    if (!armed) { armed = true; this.textContent = 'Tocá de nuevo para borrar'; var b = this; setTimeout(function () { armed = false; b.textContent = 'Borrar todo'; }, 4000); return; }
+    st = {}; try { localStorage.removeItem(KEY); } catch (e) {}
+    fields.forEach(function (el) { el.value = ''; }); armed = false; this.textContent = 'Borrar todo'; msg.textContent = 'Borrado.';
+  };
+})();
+</script>
+
+</body>
+</html>
